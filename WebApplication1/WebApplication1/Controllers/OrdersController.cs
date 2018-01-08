@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateCreated")] Order order)
+        public ActionResult Create([Bind(Include = "Id,DateCreated,Reservation,Order")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateCreated")] Order order)
+        public ActionResult Edit([Bind(Include = "Id,DateCreated,Order")] Order order)
         {
             if (ModelState.IsValid)
             {
