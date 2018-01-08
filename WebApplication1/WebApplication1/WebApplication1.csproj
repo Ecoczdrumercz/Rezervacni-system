@@ -196,9 +196,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlaygroundsController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,6 +212,14 @@
     <Compile Include="Migrations\201711280724047_InitialMigration1.cs" />
     <Compile Include="Migrations\201711280724047_InitialMigration1.Designer.cs">
       <DependentUpon>201711280724047_InitialMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801080732279_InitialMigration2.cs" />
+    <Compile Include="Migrations\201801080732279_InitialMigration2.Designer.cs">
+      <DependentUpon>201801080732279_InitialMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801080740169_InitialMigration3.cs" />
+    <Compile Include="Migrations\201801080740169_InitialMigration3.Designer.cs">
+      <DependentUpon>201801080740169_InitialMigration3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -286,6 +297,21 @@
     <Content Include="Views\Playgrounds\Details.cshtml" />
     <Content Include="Views\Playgrounds\Edit.cshtml" />
     <Content Include="Views\Playgrounds\Index.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Reservations\Create.cshtml" />
+    <Content Include="Views\Reservations\Delete.cshtml" />
+    <Content Include="Views\Reservations\Details.cshtml" />
+    <Content Include="Views\Reservations\Edit.cshtml" />
+    <Content Include="Views\Reservations\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -304,6 +330,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711280724047_InitialMigration1.resx">
       <DependentUpon>201711280724047_InitialMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801080732279_InitialMigration2.resx">
+      <DependentUpon>201801080732279_InitialMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801080740169_InitialMigration3.resx">
+      <DependentUpon>201801080740169_InitialMigration3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

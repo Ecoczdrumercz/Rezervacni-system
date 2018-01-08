@@ -12,8 +12,11 @@ namespace WebApplication1.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public DateTime DateCreated { get; set; }
+        [Required]
         public IList<Reservation> Reservation { get; set; }
+        [Required]
         public Customer Owner { get; set; }
 
     }

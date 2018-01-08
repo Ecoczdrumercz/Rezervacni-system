@@ -12,8 +12,11 @@ namespace WebApplication1.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Surname { get; set; }
+        [Required]
         public int Credits { get; set; }
         public string Email { get; set; }
         public ApplicationUser Identity { get; set; }
