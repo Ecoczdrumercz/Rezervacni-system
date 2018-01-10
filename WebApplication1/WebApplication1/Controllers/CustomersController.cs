@@ -14,6 +14,13 @@ namespace WebApplication1.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+
+        public CustomersController(ApplicationUserManager userManager)
+        {
+          //  this.UserManger = userManager;
+        }
+
         // GET: Customers
         public ActionResult Index()
         {
