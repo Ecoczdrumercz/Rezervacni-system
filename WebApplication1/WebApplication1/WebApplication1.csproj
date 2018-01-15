@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlaygroundsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,8 +211,13 @@
     <Compile Include="Migrations\201711280724047_InitialMigration1.Designer.cs">
       <DependentUpon>201711280724047_InitialMigration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801150848243_newMigration.cs" />
+    <Compile Include="Migrations\201801150848243_newMigration.Designer.cs">
+      <DependentUpon>201801150848243_newMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -224,6 +230,22 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dhtmlxscheduler.css" />
+    <Content Include="Content\imgs_dhx_terrace\arrow_left.png" />
+    <Content Include="Content\imgs_dhx_terrace\arrow_right.png" />
+    <Content Include="Content\imgs_dhx_terrace\but_repeat.gif" />
+    <Content Include="Content\imgs_dhx_terrace\calendar.gif" />
+    <Content Include="Content\imgs_dhx_terrace\clock_big.gif" />
+    <Content Include="Content\imgs_dhx_terrace\clock_small.gif" />
+    <Content Include="Content\imgs_dhx_terrace\close_icon.png" />
+    <Content Include="Content\imgs_dhx_terrace\collapse_expand_icon.gif" />
+    <Content Include="Content\imgs_dhx_terrace\controls.png" />
+    <Content Include="Content\imgs_dhx_terrace\databg.png" />
+    <Content Include="Content\imgs_dhx_terrace\databg_now.png" />
+    <Content Include="Content\imgs_dhx_terrace\export_ical.png" />
+    <Content Include="Content\imgs_dhx_terrace\export_pdf.png" />
+    <Content Include="Content\imgs_dhx_terrace\resize_dots.png" />
+    <Content Include="Content\imgs_dhx_terrace\resizing.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -236,6 +258,37 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dhtmlxscheduler.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_active_links.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_agenda_view.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_all_timed.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_collision.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_container_autoresize.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_cookie.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_csp.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_editors.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_expand.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_html_templates.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_key_nav.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_layer.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_limit.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_map_view.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_minical.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_monthheight.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_multiselect.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_multisource.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_mvc.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_offline.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_outerdrag.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_pdf.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_quick_info.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_readonly.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_recurring.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_serialize.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_tooltip.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_url.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_wp.js" />
+    <Content Include="Scripts\ext\dhtmlxscheduler_year_view.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -286,6 +339,11 @@
     <Content Include="Views\Playgrounds\Details.cshtml" />
     <Content Include="Views\Playgrounds\Edit.cshtml" />
     <Content Include="Views\Playgrounds\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -304,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711280724047_InitialMigration1.resx">
       <DependentUpon>201711280724047_InitialMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801150848243_newMigration.resx">
+      <DependentUpon>201801150848243_newMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,5 +14,8 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public Playground Place { get; set; }
         public DateTime Hour { get; set; }
+
+        public DateTime EndHour
+            => Hour.AddHours(1);
     }
 }
