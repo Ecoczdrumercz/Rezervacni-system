@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,7 @@ namespace WebApplication1.Models
     {
         public int id { get; set; }
         public string start_date { get; set; }
+        public bool read_only { get; set; }
         public string end_date { get; set; }
         public string text { get; set; }
     }

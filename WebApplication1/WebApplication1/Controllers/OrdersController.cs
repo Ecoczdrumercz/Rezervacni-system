@@ -8,18 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using Newtonsoft.Json;
-
+using Microsoft.AspNet.Identity.Owin;
 
 namespace WebApplication1.Controllers
 {
     public class OrdersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
+        
+        public OrdersController(ApplicationUserManager userManager)
+        {
+
+        }
 
         // GET: Orders
         public ActionResult Index()
         {
-            return View(db.Orders.ToList());
+            return View(context.Orders.ToList());
         }
 
         // GET: Orders/Details/5
@@ -29,7 +34,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = context.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -42,9 +47,9 @@ namespace WebApplication1.Controllers
         {
             string eventsJson = string.Empty;
             List<int> ids = new List<int>();
-            using (var db = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                var Reservations = db.Reservations.ToList();
+                var Reservations = context.Reservations.ToList();
                 var events = Reservations.Select(wh => new Event
                 {
                     id = wh.Id,
@@ -62,17 +67,40 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateCreated")] Order order)
+        public ActionResult Create(IEnumerable<Event> items)
         {
-            if (ModelState.IsValid)
+            Playground playground = context.Playgrounds.FirstOrDefault();
+            Order order = new Order() { Reservation = new List<Reservation>() };
+            foreach (var item in items)
             {
-                db.Orders.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                DateTime start_date;
+                DateTime end_date;
+                if (item.read_only)
+                    continue;
 
-            return View(order);
+                if (!DateTime.TryParse(item.start_date, out start_date))
+                    continue;
+                
+                if (!DateTime.TryParse(item.end_date, out end_date))
+                    continue;
+
+                TimeSpan orderTime = end_date - start_date;
+                for (int i = 0; i < orderTime.TotalHours; i++)
+                {
+                    order.Reservation.Add(new Reservation
+                    {
+                        Hour = start_date.AddHours(i),
+                        Place = playground
+                    });
+                }
+            }
+            order.DateCreated = DateTime.Now;
+            order.Owner = User.Identity as Customer;
+          //  return View();
+            //return RedirectToAction("Index");
+
+
+            return View();
         }
 
         // GET: Orders/Edit/5
@@ -82,7 +110,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = context.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -99,8 +127,8 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(order).State = EntityState.Modified;
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(order);
@@ -113,7 +141,7 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            Order order = context.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -126,9 +154,9 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
+            Order order = context.Orders.Find(id);
+            context.Orders.Remove(order);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -136,7 +164,7 @@ namespace WebApplication1.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
             base.Dispose(disposing);
         }

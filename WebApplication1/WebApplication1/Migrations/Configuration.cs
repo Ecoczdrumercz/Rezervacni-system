@@ -16,10 +16,13 @@ namespace WebApplication1.Migrations
 
         protected override void Seed(WebApplication1.Models.ApplicationDbContext context)
         {
-            var pl = context.Playgrounds.Add(new Playground {Name = "Dasicka hala",Owner = "Filip",Price=100 });
-            context.Reservations.AddRange(new List<Reservation>
+            var pl = context.Playgrounds.Add(new Playground {Name = "Dasicka hala",Owner = "Daniel",Price=100 });
+        context.Reservations.AddRange(new List<Reservation>
             {
-                new Reservation { Hour = DateTime.Now, Place = pl }
+                new Reservation { Hour = DateTime.Now, Place = pl },
+                new Reservation { Hour = DateTime.Now.AddHours(1), Place = pl },
+                new Reservation { Hour = DateTime.Now.AddHours(2), Place = pl },
+                new Reservation { Hour = DateTime.Now.AddHours(3), Place = pl }
             });
             
             //  This method will be called after migrating to the latest version.

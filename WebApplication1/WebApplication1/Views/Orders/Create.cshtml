@@ -6,6 +6,7 @@
 <h2>Create</h2>
 <script src="~/Scripts/dhtmlxscheduler.js" type="text/javascript"></script>
 <script src="~/Scripts/ext/dhtmlxscheduler_readonly.js" type="text/javascript"></script>
+<script src="~/Scripts/ext/dhtmlxscheduler_collision.js"></script>
 <link rel="stylesheet" href="~/Content/dhtmlxscheduler.css" type="text/css">
 
 @using (Html.BeginForm())
@@ -33,7 +34,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <button id="createButton" onclick="return false;" class="btn btn-default">Create</button>
             </div>
         </div>
     </div>
@@ -41,25 +42,56 @@
 
 <script>
     var events = '@Html.Raw(@Model.eventsJson)';
-    console.log(events);
+    var preFilledEvents = [];
+  //  console.log(events);
     scheduler.init('scheduler_here', new Date(), "week");
     scheduler.parse(events, "json");
     @foreach(var id in Model.ids)
     {
         <text>
+            preFilledEvents.push(@id);
             scheduler.getEvent(@id).readonly = true;
         </text>
     }
     scheduler.attachEvent("onClick", block_readonly)
     scheduler.attachEvent("onBeforeDrag", block_readonly)
     scheduler.attachEvent("onDblClick", block_readonly)
-
+    
     function block_readonly(id){
         if(id != undefined) {
             var event = scheduler.getEvent(id);
             return !event.readonly;
         }
     }
+
+    $("#createButton").click(function () {
+        let events = scheduler.getEvents();
+        for (let i of events) {
+            i.start_date = i.start_date.toUTCString();
+            i.end_date = i.end_date.toUTCString();
+            i.read_only = i.readonly;
+           // console.log(i.start_date.toUTCString());
+            //console.log(i.start_date.date_to_str("%d/%m/%Y"));
+        }
+        console.log(scheduler.getEvents());
+        $.ajax({
+            type: "POST",
+            url: "/Orders/Create",
+            data: { items: events },
+            
+            success: function (response) {
+                console.log("success");
+            },
+
+            failure: function (response) {
+                console.log("failure");
+            },
+            
+            error: function (response) {
+                console.log("error");
+            }
+        })
+    });
 </script>
 
 <div>
