@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
     {
         private ApplicationDbContext context = new ApplicationDbContext();
         
-        public OrdersController(ApplicationUserManager userManager)
+        public OrdersController()
         {
 
         }
@@ -43,6 +43,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Orders/Create
+        [Authorize]
         public ActionResult Create()
         {
             string eventsJson = string.Empty;
@@ -67,6 +68,7 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         public ActionResult Create(IEnumerable<Event> items)
         {
             Playground playground = context.Playgrounds.FirstOrDefault();
@@ -96,11 +98,11 @@ namespace WebApplication1.Controllers
             }
             order.DateCreated = DateTime.Now;
             order.Owner = User.Identity as Customer;
+            context.Orders.Add(order);
+            context.SaveChanges();
           //  return View();
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-
-            return View();
         }
 
         // GET: Orders/Edit/5
