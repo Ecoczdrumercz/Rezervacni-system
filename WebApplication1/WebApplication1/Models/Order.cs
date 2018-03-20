@@ -13,7 +13,7 @@ namespace WebApplication1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
-        public IList<Reservation> Reservation { get; set; }
+        public IList<Reservation> Reservations { get; set; }
         public Customer Owner { get; set; }
 
     }

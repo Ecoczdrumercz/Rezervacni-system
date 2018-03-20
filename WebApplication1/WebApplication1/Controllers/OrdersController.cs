@@ -22,23 +22,32 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Admin,Customer")]
         public ActionResult Index()
         {
-            return View(context.Orders.ToList());
+            // vsechny objednávky, kde id = přihlášený uživatel; a všechny rezervace, kde rezervace objednavkaid = id 
+            var user = User.Identity.GetUserName();
+            var Orders = context.Orders.Where(c=>c.Owner.Email==user).Include(r=>r.Reservations);
+            return View(Orders.ToList());
         }
 
         // GET: Orders/Details/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Customer")]
         public ActionResult Details(int? id)
         {
+            var user = User.Identity.GetUserName();
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(context.Orders.Where(c=>c.Owner.Email==user).ToList());
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var orde = context.Orders.Include(p=>p.Reservations).Include(r=>r.Reservations.Select(l=>l.Place)).FirstOrDefault(o => o.Id == id);
             Order order = context.Orders.Find(id);
+         //   var reservation = context.Orders.Include(p => p.Reservations).ToList();
+         //   var reservations = context.Orders.Include(r => r.Reservations).Where(o => o.Id == id);
+            //var reservations = context.Orders.Where(o => o.Id == id).Include(r=>r.Reservations);
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View(orde);
         }
 
         // GET: Orders/Create
@@ -72,7 +81,7 @@ namespace WebApplication1.Controllers
         public ActionResult Create(IEnumerable<Event> items, int? idPlace)
         {
             Playground playground = context.Playgrounds.FirstOrDefault(i => i.Id == idPlace);
-            Order order = new Order() { Reservation = new List<Reservation>() };
+            Order order = new Order() { Reservations = new List<Reservation>() };
             foreach (var item in items)
             {
                 DateTime start_date;
@@ -89,7 +98,7 @@ namespace WebApplication1.Controllers
                 TimeSpan orderTime = end_date - start_date;
                 for (int i = 0; i < orderTime.TotalHours; i++)
                 {
-                    order.Reservation.Add(new Reservation
+                    order.Reservations.Add(new Reservation
                     {
                         Hour = start_date.AddHours(i),
                         Place = playground

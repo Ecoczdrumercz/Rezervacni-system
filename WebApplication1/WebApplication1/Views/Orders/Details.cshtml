@@ -9,18 +9,29 @@
 <div>
     <h4>Order</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                Začátek rezervace
+            </th>
+            <th>
+                Konec rezervace
+            </th>
+            <th>
+                 Název hřiště
+            </th>
+        </tr>
+    @foreach(var reservation in Model.Reservations)
+    {
+        <tr>
+            <td>@reservation.Hour</td>
+            <td>@reservation.EndHour</td>
+            <td>@reservation.Place.Name</td>
+        </tr>
+    }
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Zpět na objednávky", "Index")
 </p>

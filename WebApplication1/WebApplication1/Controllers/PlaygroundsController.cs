@@ -118,9 +118,19 @@ namespace WebApplication1.Controllers
         {
             Playground playground = db.Playgrounds.Find(id);
             db.Playgrounds.Remove(playground);
-            db.Reservations.Where(l => l.Place.Id == id).ToList();
-            var hriste = db.Reservations.Where(a => a.Place.Id == id);
-            db.Orders.Where(i => i.Reservation.All(c=>c.Place.Id==id)).ToList();
+            var reservations = db.Reservations.Where(l => l.Place.Id == id).ToList();
+
+            foreach (var reservation in reservations)
+            {
+                db.Reservations.Remove(reservation);
+            }
+         //   var hriste = db.Reservations.Where(a => a.Place.Id == id);
+            var objednavky = db.Orders.Where(i => i.Reservations.All(c=>c.Place.Id==id)).ToList();
+
+            foreach(var objednavka in objednavky)
+            {
+                db.Orders.Remove(objednavka);
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -4,21 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Přehled objednávek</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            Datum vytvoření
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Owner)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reservation)
+            Rezervace
         </th>
     </tr>
 
@@ -28,10 +22,7 @@
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Owner.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reservation)
+            @Html.ActionLink("Detaily", "Details", new { id = item.Id })
         </td>
         @*<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
@@ -42,3 +33,6 @@
 }
 
 </table>
+<p>
+    @Html.ActionLink("Vytvořit novou rezervaci", "Index", "Playgrounds")
+</p>
