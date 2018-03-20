@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication1.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WebApplication1.Controllers
 {
@@ -149,13 +150,21 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            using (var context = new ApplicationDbContext())
             if (ModelState.IsValid)
             {
                 var user = new Customer { UserName = model.Email, Email = model.Email, Name= model.Name,Surname = model.Surname,Credits=model.Credits };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                        var roleStore = new RoleStore<IdentityRole>(context);
+                        var roleManager = new RoleManager<IdentityRole>(roleStore);
+                        var userStore = new UserStore<Customer>(context);
+                        var userManager = new UserManager<Customer>(userStore);
+                        UserManager.AddToRole(user.Id, "Customer");
+
+                        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

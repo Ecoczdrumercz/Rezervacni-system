@@ -15,19 +15,16 @@ namespace WebApplication1.Controllers
     public class OrdersController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
-        
-        public OrdersController()
-        {
-
-        }
 
         // GET: Orders
+        [Authorize(Roles = "Admin,Customer")]
         public ActionResult Index()
         {
             return View(context.Orders.ToList());
         }
 
         // GET: Orders/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,14 +40,15 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Orders/Create
-        [Authorize]
-        public ActionResult Create()
+        [Authorize(Roles = "Admin,Customer")]
+        public ActionResult Create(int? idPlace)
         {
+            int? playgroundId = idPlace;
             string eventsJson = string.Empty;
             List<int> ids = new List<int>();
             using (var context = new ApplicationDbContext())
             {
-                var Reservations = context.Reservations.ToList();
+                var Reservations = context.Reservations.Where(x => x.Place.Id == idPlace).ToList();
                 var events = Reservations.Select(wh => new Event
                 {
                     id = wh.Id,
@@ -61,17 +59,17 @@ namespace WebApplication1.Controllers
                 ids.AddRange(events.Select(wh => wh.id));
                 eventsJson = JsonConvert.SerializeObject(events);
             }
-            return View(new OrderViewModel { eventsJson = eventsJson, ids = ids });
+            return View(new OrderViewModel { eventsJson = eventsJson, ids = ids, playgroundId=playgroundId });
         }
 
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
-        public ActionResult Create(IEnumerable<Event> items)
+        [Authorize(Roles = "Admin,Customer")]
+        public ActionResult Create(IEnumerable<Event> items, int? idPlace)
         {
-            Playground playground = context.Playgrounds.FirstOrDefault();
+            Playground playground = context.Playgrounds.FirstOrDefault(i => i.Id == idPlace);
             Order order = new Order() { Reservation = new List<Reservation>() };
             foreach (var item in items)
             {
@@ -100,12 +98,13 @@ namespace WebApplication1.Controllers
             order.Owner = User.Identity as Customer;
             context.Orders.Add(order);
             context.SaveChanges();
-          //  return View();
-            return RedirectToAction("Index");
+            //  return View();
+            return null;
 
         }
 
         // GET: Orders/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -124,6 +123,7 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,DateCreated")] Order order)
         {
@@ -137,6 +137,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Orders/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -153,6 +154,7 @@ namespace WebApplication1.Controllers
 
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

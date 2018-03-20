@@ -1,5 +1,7 @@
 namespace WebApplication1.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -24,6 +26,11 @@ namespace WebApplication1.Migrations
                 new Reservation { Hour = DateTime.Now.AddHours(2), Place = pl },
                 new Reservation { Hour = DateTime.Now.AddHours(3), Place = pl }
             });
+            var a = context.Users.SingleOrDefault(c => c.Email == "pichda@seznam.cz");
+            var store = new UserStore<Customer>(context);
+            var manager = new UserManager<Customer>(store);
+            manager.AddToRole(a.Id, "Admin");
+
             
             //  This method will be called after migrating to the latest version.
 

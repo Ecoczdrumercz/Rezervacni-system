@@ -10,6 +10,7 @@ namespace WebApplication1.Models
     {
         public string eventsJson { get; set; }
         public List<int> ids { get; set; }
+        public int? playgroundId { get; set; }
     }
 
     public class Event

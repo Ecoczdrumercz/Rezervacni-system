@@ -71,6 +71,7 @@ namespace WebApplication1.Models
         [Required]
         [Display(Name = "Surname")]
         public string Surname { get; set; }
+
         [Required]
         [DataType(DataType.Currency)]
         public int Credits { get; set; }
