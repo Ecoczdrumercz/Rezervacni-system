@@ -9,12 +9,14 @@ using System.Web.Mvc;
 using WebApplication1.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace WebApplication1.Controllers
 {
     public class OrdersController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
+
 
         // GET: Orders
         [Authorize(Roles = "Admin,Customer")]
@@ -95,7 +97,9 @@ namespace WebApplication1.Controllers
                 }
             }
             order.DateCreated = DateTime.Now;
-            order.Owner = User.Identity as Customer;
+            var userId = User.Identity.GetUserId();
+            order.Owner = context.Users.FirstOrDefault(c => c.Id == userId);
+                //System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             context.Orders.Add(order);
             context.SaveChanges();
             //  return View();
