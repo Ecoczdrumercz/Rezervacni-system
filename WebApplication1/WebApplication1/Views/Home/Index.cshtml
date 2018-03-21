@@ -7,8 +7,32 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 text-center">
+        <h2>Seznam hřišť</h2>
+
+        <div class="col col-md-12">
+            <a href="@Url.Action("Index", "Playgrounds")">
+                <img src="../../Content/img/soccer-field.png" alt="" />
+            </a>
+        </div>
+
+    </div>
+    <div class="col-md-4 text-center">
         <h2>Moje objednávky</h2>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Přejít na demo rezervací &raquo;</a></p>
+
+        <div class="col col-md-12">
+            <a href="@Url.Action("Index", "Orders")">
+                <img src="../../Content/img/check-mark.png" alt="" />
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <h2>Můj profil</h2>
+
+        <div class="col col-md-12">
+            <a href="@Url.Action("Index", "Manage")">
+                <img src="../../Content/img/user-silhouette.png" alt="" />
+            </a>
+        </div>
     </div>
 </div>

@@ -14,11 +14,9 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Customer")]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
         [Authorize(Roles = "Admin")]

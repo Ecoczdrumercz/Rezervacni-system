@@ -247,6 +247,9 @@
     <Content Include="Content\imgs_dhx_terrace\export_pdf.png" />
     <Content Include="Content\imgs_dhx_terrace\resize_dots.png" />
     <Content Include="Content\imgs_dhx_terrace\resizing.png" />
+    <Content Include="Content\img\check-mark.png" />
+    <Content Include="Content\img\soccer-field.png" />
+    <Content Include="Content\img\user-silhouette.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

@@ -40,14 +40,29 @@ namespace WebApplication1.Controllers
             }
             var orde = context.Orders.Include(p=>p.Reservations).Include(r=>r.Reservations.Select(l=>l.Place)).FirstOrDefault(o => o.Id == id);
             Order order = context.Orders.Find(id);
-         //   var reservation = context.Orders.Include(p => p.Reservations).ToList();
-         //   var reservations = context.Orders.Include(r => r.Reservations).Where(o => o.Id == id);
-            //var reservations = context.Orders.Where(o => o.Id == id).Include(r=>r.Reservations);
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(orde);
+            var a = context.Orders.Where(c => c.Owner.Email == user).ToList();
+            bool isRealOwner = false;
+            foreach(var ord in a)
+            {
+                if(ord.Id==id)
+                {
+                    isRealOwner = true;
+                }
+            }
+            if(isRealOwner==true)
+            {
+                return View(orde);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+               // return HttpNotFound("Stránka nebyla nalezena");
+            }
+          //  return View(orde);
         }
 
         // GET: Orders/Create
