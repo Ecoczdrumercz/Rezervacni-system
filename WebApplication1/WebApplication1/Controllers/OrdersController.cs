@@ -59,7 +59,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                throw new Exception("adsfwerwerwer");
                // return HttpNotFound("Stránka nebyla nalezena");
             }
           //  return View(orde);
