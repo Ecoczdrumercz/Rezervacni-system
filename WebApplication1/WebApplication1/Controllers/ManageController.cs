@@ -16,6 +16,8 @@ namespace WebApplication1.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext context = new ApplicationDbContext();
+
         public ManageController()
         {
         }
@@ -54,6 +56,12 @@ namespace WebApplication1.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            var currentUser = User.Identity.GetUserName();
+            var user = context.Users.SingleOrDefault(c => c.Email == currentUser);
+            ViewBag.Name = user.Name;
+            ViewBag.Surname = user.Surname;
+            ViewBag.Email = user.Email;
+            ViewBag.Credits = user.Credits;
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
