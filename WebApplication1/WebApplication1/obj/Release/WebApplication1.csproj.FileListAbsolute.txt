@@ -84,3 +84,4 @@ C:\Users\Ecoczdrumercz\Source\Repos\Rezervacni-system2\WebApplication1\WebApplic
 C:\Users\Ecoczdrumercz\Source\Repos\Rezervacni-system2\WebApplication1\WebApplication1\obj\Release\WebApplication1.dll
 C:\Users\Ecoczdrumercz\Source\Repos\Rezervacni-system2\WebApplication1\WebApplication1\obj\Release\WebApplication1.pdb
 C:\Users\Ecoczdrumercz\Source\Repos\Rezervacni-system2\WebApplication1\WebApplication1\obj\Release\WebApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Ecoczdrumercz\Source\Repos\Rezervacni-system2\WebApplication1\WebApplication1\bin\cs\Microsoft.AspNet.Identity.Core.resources.dll
