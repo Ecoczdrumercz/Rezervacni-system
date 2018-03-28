@@ -18,7 +18,7 @@ namespace WebApplication1.Migrations
 
         protected override void Seed(WebApplication1.Models.ApplicationDbContext context)
         {
-            var pl = context.Playgrounds.Add(new Playground {Name = "Dasicka hala",Owner = "Daniel",Price=100 });
+            var pl = context.Playgrounds.Add(new Playground {Name = "Dasicka hala",Owner = "Daniel Pichnarcik",Price=100 });
         context.Reservations.AddRange(new List<Reservation>
             {
                 new Reservation { Hour = DateTime.Now, Place = pl },
